@@ -8,3 +8,9 @@ appname = 'News' #Application name
 def index(request):
     context = {'appname': appname}
     return render(request, 'mainapp/index.html', context)
+
+def register(request):
+    context = {'appname': appname}
+    return render(request, 'mainapp/register.html', context)
+
+
