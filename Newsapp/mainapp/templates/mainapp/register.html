@@ -7,7 +7,12 @@
 
         <form method="POST" action="">
             {% csrf_token %}
-            <!-- ADD USERNAME FIELD AND MAKE EMAIL JUST A FIELD NOT NEEDED FOR LOGIN - EMAIL WILL BE USED TO SEND MEMEBER A REG EMAIL LATER ON -->
+            
+            <div class="form-group">
+                <label for="Username">Enter a Username:</label>
+                <input type="text" class="form-control" id="User" aria-describedby="email" name="Username">
+                <small id="emailHelp" class="form-text text-muted">Make this memerable, you will be logging in with this</small>
+            </div>
 
             <div class="form-group">
               <label for="Email">Enter Email address:</label>
@@ -30,10 +35,11 @@
               <input type="password" class="form-control" id="Password" name="Password">
             </div>
 
-            <div class="form-group">
+            <!-- CONSIDER REMOVING DOUBLE PASSWORD CHECK -->
+            <!-- <div class="form-group">
                 <label for="ConfirmPassword">Re-Enter Password:</label>
                 <input type="password" class="form-control" id="ConfirmPassword" name="Password2">
-            </div>
+            </div> -->
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
