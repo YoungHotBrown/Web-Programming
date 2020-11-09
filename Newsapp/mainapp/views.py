@@ -7,7 +7,7 @@ from .models import Member, Article
 
 # Create your views here.
 
-appname = 'News' #Application name
+appname = 'NewsHub' #Application name
 
 #index view displays the home page of the application
 def index(request):

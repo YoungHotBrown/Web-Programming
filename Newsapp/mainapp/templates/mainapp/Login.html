@@ -1,33 +1,40 @@
 {% extends 'mainapp/base.html'%}
 {% block content %}
-    <h1>Welcome to {{ appname }}</h1>
-    <h2>Login:</h2>
+    <h1 class="display-4">Welcome to <b>{{ appname }}</b></h1>
 
     <div class="container">
-        <div class="alert alert-danger" role="alert">
-            {{ error }}
-        </div>
+
+        <!-- <div class="alert alert-danger" role="alert">
+            {{ error }}  
+        </div> -->
+
         {% if logIn %}
 
             <h1>Welcome to News you have successfully loggied in {{ name }}</h1>
 
         {% else %}
-        <form method="POST" action="">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="Username">Username:</label>
-                <input type="text" class="form-control" id="User" aria-describedby="email" name="Username">
-                <small id="emailHelp" class="form-text text-muted">Make this memerable, you will be logging in with this</small>
-            </div>
 
-            <div class="form-group">
-              <label for="Password">Password:</label>
-              <input type="password" class="form-control" id="Password" name="Password">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Login:</h1>
+                <form method="POST" action="{% url 'signin' %}">
+                    {% csrf_token %}
+                
+                    <div class="form-group">
+                        <label for="Username" class="lead">Username:</label>
+                        <input type="text" class="form-control" id="User" aria-describedby="email" name="Username">
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="Password" class="lead">Password:</label>
+                        <input type="password" class="form-control" id="Password" name="Password">
+                    </div>
+    
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
+        </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
         {% endif %}
     </div>
 

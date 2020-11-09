@@ -1,4 +1,53 @@
 {% extends 'mainapp/base.html'%}
 {% block content %}
-    <h1>Welcome to {{ appname }}</h1>
+
+    <div class="jumbotron" id="welcome">
+        <h1 class="display-4">Hello and Welcome to <b>{{ appname }}</b></h1>
+        <p class="lead">We Bring the News Closer to You</p>
+        <hr class="my-4">
+        <p>To begin Click the <b> Get Started Button </b></p>
+        <a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Get Started</a>
+    </div>
+
+    <div style="background:transparent !important" class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4" id="who-are-we">Who Are We?</h1>
+          <p class="lead">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+           It has survived not only five centuries, but also the leap into electronic typesetting,
+           remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
+           Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions
+           of Lorem Ipsum.</p>
+        </div>
+    </div>
+
+    <div style="background:transparent !important" class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4" id="what-we-do">What We Do?</h1>
+          <p class="lead">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+           It has survived not only five centuries, but also the leap into electronic typesetting,
+           remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
+           Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions
+           of Lorem Ipsum.</p>
+        </div>
+    </div>
+
+    <div style="background:transparent !important" class="jumbotron jumbotron-fluid" id="what-we-do">
+        <div class="container">
+          <h1 class="display-4" id="mission-statement">Our Mission Statement</h1>
+          <p class="lead">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+           It has survived not only five centuries, but also the leap into electronic typesetting,
+           remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
+           Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions
+           of Lorem Ipsum.</p>
+        </div>
+    </div>
+
+
+
 {% endblock %}
