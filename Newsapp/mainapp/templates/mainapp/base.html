@@ -21,7 +21,7 @@
 </style>
 
 <body>
-
+<!-- fix nav for navigating back to index from login and signup -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">{{appname}}</a>
@@ -35,10 +35,10 @@
 
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Articles</a>
+                      <a class="nav-link" href="{% url 'articles' %}">All Articles</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Test1</a>
+                      <a class="nav-link" href="#">My Feed</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Test2</a>
@@ -49,7 +49,7 @@
                 </ul>
 
                 <a href="#"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Profile</button></a>
-                <a href="#"><button class="btn btn-outline-danger my-2 my-sm-0" type="button">Logout</button></a>
+                <a href="{% url 'logout' %}"><button class="btn btn-outline-danger my-2 my-sm-0" type="button">Logout</button></a>
 
                 {% else %}
 
@@ -72,10 +72,11 @@
                 <a href="{% url 'register' %}"><button class="btn btn-outline-warning my-2 my-sm-0" type="button">Signup</button></a>
 
                 {% endif %}
-              </form>
             </div>
         </nav>
     </header>
+
+    
     <div class="main">
         {% block content %}
         {% endblock %}

@@ -4,15 +4,12 @@
 
     <div class="container">
 
-        <!-- <div class="alert alert-danger" role="alert">
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
             {{ error }}  
-        </div> -->
+        </div>
+        {% endif %}
 
-        {% if logIn %}
-
-            <h1>Welcome to News you have successfully loggied in {{ name }}</h1>
-
-        {% else %}
 
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
@@ -35,7 +32,6 @@
             </div>
         </div>
 
-        {% endif %}
     </div>
 
 {% endblock %}

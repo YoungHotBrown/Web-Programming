@@ -8,7 +8,7 @@
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
                 <h1 class="display-4"><b>Sign Up:</b></h1>
-                <form method="POST" action="{% url 'signin' %}">
+                <form method="POST" action="{% url 'signup' %}">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="Username" class="lead">Username:</label>
@@ -30,6 +30,7 @@
                     <div class="form-group">
                         <label for="DOB" class="lead">Date of Birth:</label>
                         <input type="text" class="form-control" id="DOB" name="DOB">
+                        <small id="emailHelp" class="form-text text-muted">Enter in the form YYYY/MM/DD</small>
                     </div>
         
                     <div class="form-group">
