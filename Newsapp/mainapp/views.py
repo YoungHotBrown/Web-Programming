@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login
+from django.core.mail import send_mail
+from django.conf import settings
 #for testing remove later
 from django.views.decorators.csrf import csrf_exempt
 import datetime
@@ -43,9 +45,15 @@ def signup(request):
         member.set_password(password) #Automatically Hashes the password
 
         try: member.save()
-        except IntegrityError: raise Http404('This username is already taken')
-        
-        # Potentially add feature to email new member 
+        except IntegrityError: raise Http404('This username or password is already taken')
+
+        # Email Feature
+        subject = "Thank You From NEWSHUB"
+        message = "Thank You for Registering with NEWSHUB " + name
+        email_from = settings.EMAIL_HOST_USER
+        recipient = [email]
+        send_mail( subject, message, email_from, recipient )
+
         context = {'appname': appname, 'userName': name}
         return render(request, 'mainapp/userRegistered.html', context)
     else:
@@ -117,4 +125,7 @@ def displayArticles(request):
         context = {'appname': appname, 'logIn': True, 'articles': articles}
         return render(request, 'mainapp/Articles.html', context)
     else:
-        raise Http404('NOOO')
+        raise Http404("This page can only be accessed by logged in users")
+
+#Todo
+#Create descorator for user check
