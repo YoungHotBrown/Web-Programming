@@ -1,0 +1,12 @@
+{% extends 'mainapp/base.html'%}
+{% block content %}
+
+    <div class="jumbotron">
+        <h1 class="display-4">Whoa there i see your not a registered user or you havent logged in to your account</h1>
+        <p class="lead">This site is only for users please make an account or log in to access this page</p>
+        <hr class="my-4">
+        <p><b>{{ appname }}</b></p>
+        <a class="btn btn-primary btn-lg" href="{% url 'index' %}" role="button">Take me Home</a>
+    </div>
+
+{% endblock %}

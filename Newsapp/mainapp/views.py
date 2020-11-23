@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.db import IntegrityError
-from django.contrib.auth import authenticate, login
+
+#Imported for email
 from django.core.mail import send_mail
 from django.conf import settings
+
 #for testing remove later
 from django.views.decorators.csrf import csrf_exempt
+
 import datetime
+
 from .models import Member, Article
 
 # Create your views here.
@@ -27,6 +31,19 @@ def register(request):
 def login(request):
     context = {'appname': appname}
     return render(request, 'mainapp/login.html', context)
+
+#Decorator to check users are logged in before loading the requested page
+def verify_login(view):
+    def usercheck(request):
+        if 'Username' in request.session:
+            user = request.session['Username']
+            try: member = Member.objects.get(username=user)
+            except Member.DoesNotExist : raise Http404("User does not exist")
+            return view(request, member)
+        else:
+            context = {'appname': appname}
+            return render(request, 'mainapp/Not-Logged-in.html', context)
+    return usercheck
 
 # Signup view used to process form data and sign users up
 def signup(request):
@@ -59,11 +76,12 @@ def signup(request):
     else:
         raise Http404("The Fields required to register an employee are not present")
 
+
 # signin view used to process form data and sign user in
 def signin(request):
     # Checks fields are present in request object
     if 'Username' in request.POST and 'Password' in request.POST:
-        # Extract fields from request and store in varibales
+        # Extract fields from request.POST and store in variables
         username = request.POST['Username']
         password = request.POST['Password']
 
@@ -76,29 +94,9 @@ def signin(request):
 
          #Compare the password given to the hashed password in the DB
         if member.check_password(password):
+
             #Set session variables for the user logged in
             request.session['Username'] = username
-
-
-            #MAY NOT NEED TO STORE PASSWORD IN SESSION VARIABLE, LEAVE COMMENTED FOR NOW
-            #request.session['Password'] = password 
-            
-
-            #May NOT NEED COOKIES LEAVE COMMENTED FOR NOW
-
-
-            #Set cookie
-            # timeNow = datetime.datetime.utcnow()
-            # age = 365 * 24 * 60 * 60 #time in seconds the cookie will last
-            # delta = timeNow + datetime.timedelta(seconds=age)
-            # format = "%a, %d-%b-%Y %H:%M:%S GMT"
-            # expiration = datetime.datetime.strftime(delta, format)
-            # #Set login in context to be passed to template
-            # context = {'appname': appname, 'logIn': True, 'name': username}
-            # #create variable res to store render so cookie can be set to it
-            # res = render(request, 'mainapp/Logged_in_home.html', context) # change from login
-            # res.set_cookie('lastLogin', timeNow, expires=expiration)
-            # return res
 
             context = {'logIn': True, 'name': username, 'appname': appname}
             return render(request, 'mainapp/Logged_in_home.html', context)
@@ -113,19 +111,61 @@ def signin(request):
         #return render(request, 'mainapp/login.html', context)
 
 # Logout and flush session variables
-def logout(request):
+@verify_login
+def logout(request, member):
     request.session.flush()
     context = {'appname': appname}
     return render(request, 'mainapp/Logged_out.html', context)
 
-
-def displayArticles(request):
-    if 'Username' in request.session:
+#view used to display the article in a database
+@verify_login
+def displayArticles(request, member):
+    if member.interest_tag == 'None':
         articles =  Article.objects.all().values('article_name', 'article_author', 'article_date', 'article_tag', 'article_contents')
         context = {'appname': appname, 'logIn': True, 'articles': articles}
         return render(request, 'mainapp/Articles.html', context)
     else:
-        raise Http404("This page can only be accessed by logged in users")
+        tag = member.interest_tag
+        
+        articles =  Article.objects.all().filter(article_tag = tag)
+        context = {'appname': appname, 'logIn': True, 'articles': articles}
+        return render(request, 'mainapp/Articles.html', context)
+
+
+#View used to show user detail on the profile
+@verify_login
+def ProfilePage(request, member):
+    context = {'appname': appname, 'logIn': True, 'profile': member}
+    return render(request, 'mainapp/Profile.html', context)
+
+#View used to change user profile picture
+@verify_login
+def ChangeImage(request, member):
+    if 'profilepic' in request.POST:
+        profilepic = request.POST['profilepic']
+        member.profile_picture = profilepic
+        member.save()
+        context = {'appname': appname, 'logIn': True, 'profile': member}
+        return render(request, 'mainapp/Profile.html', context)
+    else:
+        raise Http404("profilepic does not exist")
+
+@verify_login
+def changeInterest_tag(request, member):
+    if 'interest_tag' in request.POST:
+        interestTag = request.POST['interest_tag']
+        member.interest_tag = interestTag
+        member.save()
+        context = {'appname': appname, 'logIn': True, 'profile': member}
+        return render(request, 'mainapp/Profile.html', context)
+    else:
+        raise Http404("The field interest_tag does not exist")
+        
+
+
+    
 
 #Todo
-#Create descorator for user check
+#Create descorator for user check - Done
+#Fix user profile image display + fix error
+#change interest tag endpoint

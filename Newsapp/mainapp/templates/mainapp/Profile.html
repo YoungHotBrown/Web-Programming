@@ -1,0 +1,46 @@
+{% extends 'mainapp/base.html'%}
+{% block content %}
+
+
+    <div class="jumbotron">
+        <h1 class="display-4">{{profile.first_name}}'s Profile</h1>
+        {% if profile.profile_picture%}
+        <img src="{{profile.profile_picture.url}}">
+        {%else%}
+        <img alt="lol">
+        {%endif%}
+        <p class="lead">Username: {{profile.username}}</p>
+        <p class="lead">Date of Birth: {{profile.date_of_birth}}</p>
+        <hr class="my-4">
+        <p>Email Address: {{profile.email}}</p>
+        <p></p>
+        <p>Interest Tag: {{profile.interest_tag}}</p>
+        <br>
+        <form method="post" action="{% url 'changeimage' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label>Change Profile Picture</label>
+              <input type="file" class="form-control" id="profile-pic-upload" name="profilepic">
+              <small id="emailHelp" class="form-text text-muted">Upload JPEG</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <form method="post" action="{% url 'changeinterest' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label>Set Interest Tag</label>
+                <select id="InterestTag" class="custom-select" name="interest_tag">
+                    <option value="None">None</option>
+                    <option value="politics">Politics</option>
+                    <option value="science">Science</option>
+                    <option value="health">Health</option>
+                    <option value="tech">Tech</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+
+{% endblock %}

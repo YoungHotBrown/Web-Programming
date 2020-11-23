@@ -48,7 +48,7 @@
                     </li>
                 </ul>
 
-                <a href="#"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Profile</button></a>
+                <a href="{% url 'profile' %}"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Profile</button></a>
                 <a href="{% url 'logout' %}"><button class="btn btn-outline-danger my-2 my-sm-0" type="button">Logout</button></a>
 
                 {% else %}

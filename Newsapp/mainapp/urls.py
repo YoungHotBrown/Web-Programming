@@ -9,5 +9,8 @@ urlpatterns = [
     path('signin', views.signin, name='signin'), # Processes the login
     path('displayArticles', views.displayArticles, name='articles'),
     path('logout', views.logout, name='logout'),
+    path('ProfilePage', views.ProfilePage, name='profile'),
+    path('changeImage', views.ChangeImage, name='changeimage'),
+    path('changeInterest', views.changeInterest_tag, name="changeinterest"),
 ]
 
