@@ -168,4 +168,4 @@ def changeInterest_tag(request, member):
 #Todo
 #Create descorator for user check - Done
 #Fix user profile image display + fix error
-#change interest tag endpoint
+#change interest tag endpoint - Done
