@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('ProfilePage', views.ProfilePage, name='profile'),
     path('changeImage', views.ChangeImage, name='changeimage'),
+    path('deleteImage', views.deleteImage, name='deleteimage'),
     path('changeInterest', views.changeInterest_tag, name="changeinterest"),
 ]
 

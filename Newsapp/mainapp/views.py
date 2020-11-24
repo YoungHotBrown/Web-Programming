@@ -6,7 +6,7 @@ from django.db import IntegrityError
 from django.core.mail import send_mail
 from django.conf import settings
 
-#for testing remove later
+#for testing remove later - insomnia
 from django.views.decorators.csrf import csrf_exempt
 
 import datetime
@@ -24,13 +24,19 @@ def index(request):
 
 # Register View displays the register page
 def register(request):
-    context = {'appname': appname}
-    return render(request, 'mainapp/register.html', context)
+    if 'Username' in request.session:
+        return displayArticles(request)
+    else:
+        context = {'appname': appname}
+        return render(request, 'mainapp/register.html', context)
 
 # Login views used to display the login page
 def login(request):
-    context = {'appname': appname}
-    return render(request, 'mainapp/login.html', context)
+    if 'Username' in request.session: #potentially keep
+        return displayArticles(request)
+    else:
+        context = {'appname': appname}
+        return render(request, 'mainapp/login.html', context)
 
 #Decorator to check users are logged in before loading the requested page
 def verify_login(view):
@@ -151,13 +157,24 @@ def ChangeImage(request, member):
         raise Http404("profilepic does not exist")
 
 @verify_login
+def deleteImage(request, member):
+    if member.profile_picture:
+        member.profile_picture.delete()
+        #context = {'appname': appname, 'logIn': True, 'profile': member}
+        #return render(request, 'mainapp/Profile.html', context)
+        return ProfilePage(request)
+    else:
+        raise Http404("can not delete there is no picture does not exist")
+
+@verify_login
 def changeInterest_tag(request, member):
     if 'interest_tag' in request.POST:
         interestTag = request.POST['interest_tag']
         member.interest_tag = interestTag
         member.save()
-        context = {'appname': appname, 'logIn': True, 'profile': member}
-        return render(request, 'mainapp/Profile.html', context)
+        #context = {'appname': appname, 'logIn': True, 'profile': member}
+        #return render(request, 'mainapp/Profile.html', context)
+        return ProfilePage(request)
     else:
         raise Http404("The field interest_tag does not exist")
         
@@ -169,3 +186,4 @@ def changeInterest_tag(request, member):
 #Create descorator for user check - Done
 #Fix user profile image display + fix error
 #change interest tag endpoint - Done
+#redirect users instead of using render and conetext again and again

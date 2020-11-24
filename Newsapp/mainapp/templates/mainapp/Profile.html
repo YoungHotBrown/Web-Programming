@@ -6,8 +6,9 @@
         <h1 class="display-4">{{profile.first_name}}'s Profile</h1>
         {% if profile.profile_picture%}
         <img src="{{profile.profile_picture.url}}">
+        <form method="post" action="{% url 'deleteimage'%}">{% csrf_token %}<button class="btn btn-danger">Delete Picture</button></form>
         {%else%}
-        <img alt="lol">
+        <img alt="You havent got a profile pciture">
         {%endif%}
         <p class="lead">Username: {{profile.username}}</p>
         <p class="lead">Date of Birth: {{profile.date_of_birth}}</p>
